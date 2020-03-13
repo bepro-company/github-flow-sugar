@@ -6,7 +6,7 @@ github-flow 를 좀 더 편하게 써보자
 
 #### Using homebrew
 
-1. brew tap 8percent/brew
+1. brew tap bepro/brew
 2. brew install github-flow-sugar
 
 #### Manual install
