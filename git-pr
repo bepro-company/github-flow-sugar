@@ -33,7 +33,7 @@ fi
 
 # Compare url 만들고 브라우저로 열기
 
-GITHUB_ID=$(git config --get remote.origin.url | sed -e 's/^[^:]*://' | sed -e 's/.git$//')
+GITHUB_ID=$(git config --get remote.origin.url | sed -e 's/^[^:]*://' | sed -e 's/.git$//' | sed -e 's/^[^:]*github.com\///')
 URL="https://github.com/$GITHUB_ID/compare/$BR_MASTER...$CURRENT"
 
 case $(uname -s) in
