@@ -34,7 +34,19 @@ fi
 # Compare url 만들고 브라우저로 열기
 
 GITHUB_ID=$(git config --get remote.origin.url | sed -e 's/^[^:]*://' | sed -e 's/.git$//' | sed -e 's/^[^:]*github.com\///')
-URL="https://github.com/$GITHUB_ID/compare/$CURRENT?expand=1"
+BODY="## Changes\n"
+
+TICKET=$(echo "$CURRENT" | grep -Eo "(DATACENTER|RESEARCH|EDITOR)-[0-9]+")
+
+if [[ $TICKET == "" ]]
+then
+  BODY+="- "
+else
+  BODY+="- Jira Ticket: [$TICKET]\n-"
+fi
+
+BODY_QUERY+=$(echo "$BODY" | perl -MURI::Escape -ne 'chomp;$str = uri_escape($_); $str =~ s/%5Cn/%0A/ig; print $str')
+URL="https://github.com/$GITHUB_ID/compare/master...$CURRENT?expand=1&body=$BODY_QUERY"
 
 case $(uname -s) in
 "Darwin")
