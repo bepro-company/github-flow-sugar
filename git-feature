@@ -1,15 +1,20 @@
 #!/bin/bash
 
 BR_MASTER="master"
+DATE=$(date +%y%m%d)
 
-if [ $# -ne 1 ]
+if [[ $# == 1 ]]
 then
-  echo "usage: $(basename $0) FEATURE_NAME"
+  BRANCH_NAME="${DATE}_$1"
+elif [[ $# == 2 ]]
+then
+  BRANCH_NAME="${DATE}_DATACENTER-$1_$2"
+else
+  base=$(basename $0)
+  echo "usage: $base FEATURE_NAME"
+  echo "usage: $base JIRA_TICKET_NUMBER FEATURE_NAME"
   exit 1
 fi
-
-BRANCH_NAME="$(date +%y%m%d)_$1"
-
 
 if [ $(git rev-parse --abbrev-ref HEAD) != "$BR_MASTER" ]
 then
