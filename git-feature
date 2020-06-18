@@ -8,7 +8,11 @@ then
   BRANCH_NAME="${DATE}_$1"
 elif [[ $# == 2 ]]
 then
-  BRANCH_NAME="${DATE}_DATACENTER-$1_$2"
+  TICKET="$1"
+  # default: DATACENTER
+  echo "$TICKET" | grep -Eq "^(DATACENTER|RESEARCH|EDITOR)-[0-9]+" || TICKET="DATACENTER-$TICKET"
+
+  BRANCH_NAME="${DATE}_${TICKET}_$2"
 else
   base=$(basename $0)
   echo "usage: $base FEATURE_NAME"
