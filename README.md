@@ -33,5 +33,7 @@ git-feature EDITOR-1 3d_player
 
 ```bash
 # Jira ticket will be attached in body automatically
+# If a base branch is omitted, it aims to master 
 git-pr
+git-pr develop
 ```
