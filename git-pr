@@ -1,12 +1,15 @@
 #!/bin/bash
 
-if [ $# -ne 0 ]
+if [[ $# == 0 ]]
 then
-  echo "usage: $(basename $0)"
+  BR_BASE="master"
+elif [[ $# == 1 ]]
+then
+  BR_BASE="$1"
+else
+  echo "usage: $(basename $0) YOUR_BASE_BRANCH"
   exit 1
 fi
-
-BR_MASTER="master"
 
 CURRENT=$(git rev-parse --abbrev-ref HEAD)
 
@@ -46,7 +49,7 @@ else
 fi
 
 BODY_QUERY+=$(echo "$BODY" | perl -MURI::Escape -ne 'chomp;$str = uri_escape($_); $str =~ s/%5Cn/%0A/ig; print $str')
-URL="https://github.com/$GITHUB_ID/compare/master...$CURRENT?expand=1&body=$BODY_QUERY"
+URL="https://github.com/$GITHUB_ID/compare/$BR_BASE...$CURRENT?expand=1&body=$BODY_QUERY"
 
 case $(uname -s) in
 "Darwin")
